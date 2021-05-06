@@ -170,12 +170,18 @@
     (insert
      (format "Address:%15s%41s\n" ip ip-in-binary)
      (format "Netmask:%16s = %2s %34s\n" netmask cidr cidr-binary)
-     (format "Wildcard:%11s%44s\n" wildcard-ip wildcard-binary)
-     (format "=>\nNetwork:%14s%42s\n" net-ip (ipcalc-network ip cidr))
-     (format "HostMin:%14s%42s\n" host-min-ip host-min-binary)
-     (format "HostMax:%16s%40s\n" host-max-ip host-max-binary)
-     (format "Broadcast:%14s%40s\n" broadcast-ip broadcast-binary)
-     (format "Hosts/Net: %d\n" (ipcalc-hosts/net cidr-int)))))
+     (format "Wildcard:%11s%44s\n" wildcard-ip wildcard-binary))
+    (if (string-equal cidr "31")
+        (insert
+         (format "=>\nPoint to Point\n")
+         (format "HostMin:%16s%42s\n" net-ip (ipcalc-network ip cidr))
+         (format "HostMax:%16s%40s\n" broadcast-ip broadcast-binary))
+      (insert
+       (format "=>\nNetwork:%14s%42s\n" net-ip (ipcalc-network ip cidr))
+       (format "HostMin:%14s%42s\n" host-min-ip host-min-binary)
+       (format "HostMax:%16s%40s\n" host-max-ip host-max-binary)
+       (format "Broadcast:%14s%40s\n" broadcast-ip broadcast-binary)
+       (format "Hosts/Net: %d\n" (ipcalc-hosts/net cidr-int))))))
 
 (provide 'ipcalc)
 
