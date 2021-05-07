@@ -48,6 +48,32 @@
 
 (defconst ipcalc--cidr-default 32 "CIDR value.")
 
+(defcustom ipcalc-font-lock-keywords
+  '(("^Address" 0 font-lock-keyword-face))
+  "Default expressions to highlight in ipcalc mode."
+  :type 'sexp
+  :group 'net-utils)
+
+(defvar ipcalc-mode-map
+  (let ((map (make-sparse-keymap)))
+    (suppress-keymap map)
+    (define-key map "q" 'ipcalc-exit)
+    map))
+
+(define-derived-mode ipcalc-mode nil "IP Query"
+  "Major mode for displaying IP output."
+  (buffer-disable-undo)
+  (unless (featurep 'xemacs)
+    (set (make-local-variable 'font-lock-defaults)
+         '(ipcalc-font-lock-keywords t)))
+  (when (featurep 'font-lock)
+    (font-lock-set-defaults)))
+
+(defun ipcalc-exit ()
+  "Bury ipcalc output buffer."
+  (interactive)
+  (quit-window (current-buffer)))
+
 (defun ipcalc-int-to-bin-string (n &optional length)
   ;; 08 Jun 1997 Jamie Zawinski <jwz@netscape.com> comp.emacs
   "Convert integer N to bit string (LENGTH, default 8)."
@@ -167,6 +193,7 @@
     (if (get-buffer buffer)
         (kill-buffer buffer))
     (pop-to-buffer buffer)
+    (ipcalc-mode)
     (insert
      (format "Address:%15s%41s\n" ip ip-in-binary)
      (format "Netmask:%16s = %2s %34s\n" netmask cidr cidr-binary)
