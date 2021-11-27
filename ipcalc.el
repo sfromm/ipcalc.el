@@ -2,7 +2,7 @@
 
 ;; Filename: ipcalc.el
 ;; Description: IP calculator
-;; Author: "Aleksandar Simic" <asimic@gmail.com>
+;; Author: "Aleksandar Simic" <asimic@gmail.com>, "Stephen Fromm" <sfromm@gmail.com>
 ;; License: BSD
 ;; Created: 2012-03-11 17:10
 ;; Version: 0.2.6
