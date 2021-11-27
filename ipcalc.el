@@ -48,8 +48,18 @@
 
 (defconst ipcalc--cidr-default 32 "CIDR value.")
 
+(defconst ipcalc-keywords-regex
+  (concat
+   "^"
+   (regexp-opt
+    '("Address" "Netmask" "Wildcard"
+      "HostMin" "HostMax" "Network"
+      "Broadcast" "Hosts/Net") 'words))
+  "Regular expressions for IPCalc.")
+
 (defcustom ipcalc-font-lock-keywords
-  '(("^Address" 0 font-lock-keyword-face))
+  (list
+   (list ipcalc-keywords-regex 0 font-lock-keyword-face))
   "Default expressions to highlight in ipcalc mode."
   :type 'sexp
   :group 'net-utils)
